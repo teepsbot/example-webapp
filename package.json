@@ -6,7 +6,7 @@
   "author": "Steven Petryk <me@stevenpetryk.com> (http://stevenpetryk.com)",
   "license": "MIT",
   "scripts": {
-    "test": "jest"
+    "test": "standard && jest"
   },
   "devDependencies": {
     "autoprefixer": "^6.2.3",
@@ -36,6 +36,7 @@
     "jest-cli": "^0.8.2",
     "postcss-nested": "^1.0.0",
     "run-sequence": "^1.1.5",
+    "standard": "^5.4.1",
     "vinyl-source-stream": "^1.1.0"
   },
   "dependencies": {
