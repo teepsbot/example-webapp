@@ -52,20 +52,20 @@ const imagesDir = 'images'
 // Top-level tasks
 // *************************************************************************************************
 
-gulp.task('default', ['build'])
+gulp.task('default', [ 'build' ])
 
-gulp.task('serve', ['watch'], cb => (
-  sequence(['browsersync'], cb)
+gulp.task('serve', [ 'watch' ], cb => (
+  sequence([ 'browsersync' ], cb)
 ))
 
 gulp.task('build', cb => (
-  sequence('clean', ['styles', 'bundle', 'pages', 'assets'], cb)
+  sequence('clean', [ 'styles', 'bundle', 'pages', 'assets' ], cb)
 ))
 
-gulp.task('release', ['release:prepare', 'release:create', 'release:cleanup'])
+gulp.task('release', [ 'release:prepare', 'release:create', 'release:cleanup' ])
 
-gulp.task('watch', ['build'], cb => (
-  sequence(['styles:watch', 'bundle:watch', 'pages:watch', 'assets:watch'], cb)
+gulp.task('watch', [ 'build' ], cb => (
+  sequence([ 'styles:watch', 'bundle:watch', 'pages:watch', 'assets:watch' ], cb)
 ))
 
 // *************************************************************************************************
@@ -73,12 +73,12 @@ gulp.task('watch', ['build'], cb => (
 // *************************************************************************************************
 
 gulp.task('clean', () => (
-  del([path.join(buildDir, '**/*')])
+  del([ path.join(buildDir, '**/*') ])
 ))
 
 gulp.task('styles', () => {
   var processors = [
-    autoprefixer({ browsers: ['last 1 version'] }),
+    autoprefixer({ browsers: [ 'last 1 version' ] }),
     mqpacker,
     csswring,
     nested
@@ -94,7 +94,7 @@ gulp.task('styles', () => {
 })
 
 gulp.task('styles:watch', () => (
-  gulp.watch(path.join(stylesDir, '**/*.css'), ['styles'])
+  gulp.watch(path.join(stylesDir, '**/*.css'), [ 'styles' ])
 ))
 
 gulp.task('assets', () => (
@@ -104,7 +104,7 @@ gulp.task('assets', () => (
 ))
 
 gulp.task('assets:watch', () => (
-  gulp.watch(path.join(imagesDir, '**/*'), ['assets'])
+  gulp.watch(path.join(imagesDir, '**/*'), [ 'assets' ])
 ))
 
 gulp.task('pages', () => (
@@ -114,10 +114,10 @@ gulp.task('pages', () => (
 ))
 
 gulp.task('pages:watch', () => (
-  gulp.watch(indexPath, ['pages'])
+  gulp.watch(indexPath, [ 'pages' ])
 ))
 
-var bundleOpts = { debug: true, paths: ['./scripts'], cacheFile: '.browserifyCache.json' }
+var bundleOpts = { debug: true, paths: [ './scripts' ], cacheFile: '.browserifyCache.json' }
 var bundler = browserifyInc('scripts/app.js', bundleOpts)
 bundler.transform(babelify)
 bundler.transform(envify)
@@ -131,7 +131,7 @@ gulp.task('bundle', () => {
 })
 
 gulp.task('bundle:watch', () => (
-  gulp.watch(path.join(scriptsDir, '**/*.js'), ['bundle'])
+  gulp.watch(path.join(scriptsDir, '**/*.js'), [ 'bundle' ])
 ))
 
 gulp.task('browsersync', () => {
@@ -154,13 +154,13 @@ function getFolders (dir) {
   }
 }
 
-gulp.task('release:prepare', ['build'], () => (
+gulp.task('release:prepare', [ 'build' ], () => (
   gulp.src(path.join(buildDir, scriptsDir, 'bundle.js'))
     .pipe(uglify())
     .pipe(gulp.dest(path.join(buildDir, scriptsDir)))
 ))
 
-gulp.task('release:create', ['build', 'release:prepare'], done => (
+gulp.task('release:create', [ 'build', 'release:prepare' ], done => (
   gulp.src(path.join(buildDir, '**/*'))
     .pipe(gulp.dest(path.join(releasesDir, timestamp)))
     .on('end', () => (
@@ -185,7 +185,7 @@ gulp.task('rollback', () => {
   if (previousRelease) {
     return gulp.src(previousRelease)
       .pipe(symlink(path.join(releasesDir, 'current'), { force: true }))
-      .on('end', () => del([latestRelease]))
+      .on('end', () => del([ latestRelease ]))
   } else {
     gutil.log(gutil.colors.red('No previous release was found.'))
     process.exit(1)

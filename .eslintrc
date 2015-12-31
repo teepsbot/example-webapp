@@ -1,0 +1,16 @@
+{
+  "extends": [ "standard", "standard-react" ],
+  "plugins": [ "standard" ],
+  "globals": {
+    "jest": false,
+    "describe": false,
+    "it": false,
+    "expect": false
+  },
+  "rules": {
+    "array-bracket-spacing": [ 2, "always" ],
+    "object-curly-spacing": [ 2, "always" ],
+    "prefer-arrow-callback": [ 2 ],
+    "object-shorthand": [ 2, "always" ]
+  }
+}
